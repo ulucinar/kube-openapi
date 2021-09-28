@@ -27,8 +27,9 @@ import (
 	"github.com/go-openapi/spec"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/stretchr/testify/assert"
-	"k8s.io/kube-openapi/pkg/handler"
 	"sigs.k8s.io/yaml"
+
+	"k8s.io/kube-openapi/pkg/handler"
 )
 
 type DebugSpec struct {
@@ -1764,11 +1765,7 @@ func BenchmarkMergeSpecsIgnorePathConflictsWithKubeSpec(b *testing.B) {
 		}
 
 		specBytes, _ := jsoniter.Marshal(sp)
-		var json map[string]interface{}
-		if err := jsoniter.Unmarshal(specBytes, &json); err != nil {
-			b.Fatal(err)
-		}
-		handler.ToProtoBinary(json)
+		handler.ToProtoBinary(specBytes)
 
 		b.StopTimer()
 	}
